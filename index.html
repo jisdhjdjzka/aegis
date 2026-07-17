@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aegis — Roblox Larp Extension</title>
+    <meta name="description" content="Aegis is a browser extension that spoofs Robux, identity, avatar, limiteds, and more on Roblox — all locally, all cosmetic." />
+    <link rel="icon" href="Aegis.png" type="image/png" />
+
+    <!-- Open Graph / Embed -->
+    <meta property="og:title" content="Aegis" />
+    <meta property="og:description" content="The best Roblox larp tool. Spoofs identity, avatar, Robux, limiteds, and more — all local, all cosmetic." />
+    <meta property="og:image" content="Aegis.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Aegis" />
+    <meta name="twitter:description" content="The best Roblox larp tool. Spoofs identity, avatar, Robux, limiteds, and more — all local, all cosmetic." />
+    <meta name="twitter:image" content="Aegis.png" />
+    <meta name="theme-color" content="#c6ff52" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="noise"></div>
+
+    <header class="nav" id="nav">
+        <div class="nav__inner">
+            <a href="#" class="nav__brand">
+                <img src="Aegis.png" alt="Aegis" class="nav__logo" />
+                <span class="nav__wordmark">Aegis</span>
+            </a>
+            <nav class="nav__links">
+                <a href="#overview">Overview</a>
+                <a href="#features">Features</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <div class="nav__cta">
+                <a href="https://discord.gg/Aegis" target="_blank" rel="noopener" class="btn btn--ghost">Discord</a>
+                <a href="https://file.garden/alJib1uIhByXg4U5/Aegis.zip" class="btn btn--primary">Add to Chrome</a>
+            </div>
+            <button class="nav__burger" id="navBurger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://discord.gg/Aegis" target="_blank" rel="noopener" class="btn btn--ghost" style="margin-top:12px">Discord</a>
+        <a href="https://file.garden/alJib1uIhByXg4U5/Aegis.zip" class="btn btn--primary" style="margin-top:8px">Add to Chrome</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero__grid-bg"></div>
+        <div class="hero__content">
+            <div class="hero__tag">
+                <span class="hero__dot"></span>
+                <span>browser extension</span>
+            </div>
+            <h1 class="hero__title">
+                The Best Roblox<br />
+                Larp Tool.
+            </h1>
+            <p class="hero__sub">
+                Chrome extension. Spoofs identity, avatar, Robux, limiteds, and more. All local. All cosmetic.
+            </p>
+            <div class="hero__cta">
+                <a href="https://file.garden/alJib1uIhByXg4U5/Aegis.zip" class="btn btn--primary btn--lg">
+                    Add to Chrome
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="https://discord.gg/aegiss" target="_blank" rel="noopener" class="hero__link">Join Discord →</a>
+            </div>
+        </div>
+        <div class="hero__visual">
+            <div class="hero__logo-wrap">
+                <img src="Aegis.png" alt="" class="hero__logo" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features-section">
+        <div class="features-section__inner">
+            <div class="features-section__head">
+                <p class="mono">Features</p>
+                <h2>Every spoof you need.</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h3>Identity spoof</h3>
+                    <p>Change your username, display name, verified badge, premium status, and profile thumbnail.</p>
+                    <div class="tags">
+                        <span>Username</span>
+                        <span>Display Name</span>
+                        <span>Verified</span>
+                        <span>Premium</span>
+                        <span>Thumbnail</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Avatar spoof</h3>
+                    <p>Override your avatar appearance — swap outfits, apply face textures, enable headless, or spoof worn items.</p>
+                    <div class="tags">
+                        <span>Appearance</span>
+                        <span>Face Texture</span>
+                        <span>Headless</span>
+                        <span>Worn Items</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M8 10h8M9 14h6"/></svg>
+                    </div>
+                    <h3>Robux spoof</h3>
+                    <p>Fake your Robux balance to whatever number you want. Show off what you don't have.</p>
+                    <div class="tags">
+                        <span>Balance</span>
+                        <span>History</span>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </div>
+                    <h3>Limiteds spoof</h3>
+                    <p>Fake your limited item inventory and values. Own items you don't actually have.</p>
+                    <div class="tags">
+                        <span>Limited Items</span>
+                        <span>Values</span>
+                        <span>Inventory</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+                    </div>
+                    <h3>In-game sync</h3>
+                    <p>Keeps your spoofed setup consistent between the Roblox website and the actual game client. Requires running Aegis BootStrapper.bat from the Roblox home screen in the app.</p>
+                    <div class="tags">
+                        <span>Website ↔ Game</span>
+                        <span>Live</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    </div>
+                    <h3>Fake purchase</h3>
+                    <p>Generate fake purchase confirmations and receipts. Great for screenshots, thumbnails, and content creation.</p>
+                    <div class="tags">
+                        <span>Purchase Screens</span>
+                        <span>Receipts</span>
+                        <span>Confirmations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Changelog + Download side by side -->
+    <section id="download" class="split-section split-section--dark">
+        <div class="split-section__inner">
+            <div class="split-section__left">
+                <p class="mono">Changelog</p>
+                <h2>What's new.</h2>
+                <div class="changelog">
+                    <div class="changelog__entry">
+                        <div class="changelog__entry-head">
+                            <span class="changelog__ver">v1.0.0</span>
+                            <span class="changelog__date">Jul 12, 2026</span>
+                        </div>
+                        <ul class="changelog__list">
+                            <li>Fixed thumbnail spoof not persisting after game restart</li>
+                            <li>Added headless head toggle to avatar module</li>
+                            <li>Extension now syncs face textures</li>
+                        </ul>
+                    </div>
+                    <div class="changelog__entry">
+                        <div class="changelog__entry-head">
+                            <span class="changelog__ver">v0.9.0</span>
+                            <span class="changelog__date">Jun 28, 2026</span>
+                        </div>
+                        <ul class="changelog__list">
+                            <li>New economy module — Robux, limiteds, and trade values</li>
+                            <li>Rolimons value spoof added</li>
+                            <li>Avatar sync engine completely rewritten</li>
+                        </ul>
+                    </div>
+                    <div class="changelog__entry">
+                        <div class="changelog__entry-head">
+                            <span class="changelog__ver">v0.8.0</span>
+                            <span class="changelog__date">May 15, 2026</span>
+                        </div>
+                        <ul class="changelog__list">
+                            <li>In-game sync module added</li>
+                            <li>Profile spoof module added</li>
+                            <li>Performance improvements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="split-section__right split-section__right--center">
+                <div class="download-card">
+                    <img src="Aegis.png" alt="" class="download-card__logo" />
+                    <p class="mono">Get the extension</p>
+                    <h3>Install Aegis.</h3>
+                    <p class="download-card__sub">Chrome, Edge, any Chromium browser. One click.</p>
+                    <a href="https://file.garden/alJib1uIhByXg4U5/Aegis.zip" class="btn btn--primary btn--lg download-card__btn">
+                        Add to Chrome
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <p class="download-card__meta">
+                        <span>v1.0.0</span>
+                        <span>·</span>
+                        <span>No account required</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust strip -->
+    <section class="trust">
+        <div class="trust__inner">
+            <div class="trust__item">
+                <span class="trust__num">100%</span>
+                <span class="trust__label">Local</span>
+            </div>
+            <div class="trust__divider"></div>
+            <div class="trust__item">
+                <span class="trust__num">Free</span>
+                <span class="trust__label">No paywalls</span>
+            </div>
+            <div class="trust__divider"></div>
+            <div class="trust__item">
+                <span class="trust__num">6</span>
+                <span class="trust__label">Modules</span>
+            </div>
+            <div class="trust__divider"></div>
+            <div class="trust__item">
+                <span class="trust__num">0</span>
+                <span class="trust__label">Server calls</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="faq-section__inner">
+            <div class="faq-section__head">
+                <p class="mono">FAQ</p>
+                <h2>Common questions.</h2>
+            </div>
+            <div class="faq">
+                <details class="faq__item">
+                    <summary>What is a larp tool?</summary>
+                    <p>A larp tool lets you visually roleplay a setup you don't actually have — spoofed Robux, Premium, Verified, limiteds, and so on. Everything is cosmetic and local. Nothing about your real account is changed.</p>
+                </details>
+                <details class="faq__item">
+                    <summary>How does the extension work?</summary>
+                    <p>Aegis injects into the Roblox website and modifies what you see locally. It changes profile data, avatar renders, currency displays, and more — all on your end. Other people see your real profile; you see the spoofed version.</p>
+                </details>
+                <details class="faq__item">
+                    <summary>Is Aegis safe to use?</summary>
+                    <p>Yes. Aegis runs entirely in your browser and never communicates with Roblox servers. It doesn't require login credentials or account access, and every change is purely visual.</p>
+                </details>
+                <details class="faq__item">
+                    <summary>Can this get my account banned?</summary>
+                    <p>There's nothing for Roblox to detect since Aegis has no server-side footprint. That said, don't use it to scam people or misrepresent content in bad faith — that's on you.</p>
+                </details>
+                <details class="faq__item">
+                    <summary>Does in-game sync actually work?</summary>
+                    <p>Yes. The sync module bridges the gap between the website spoof and the game client, so your avatar and identity changes show up in-game too. You need to run Aegis BootStrapper.bat from the Roblox home screen in the app for it to work.</p>
+                </details>
+                <details class="faq__item">
+                    <summary>Why is Aegis free?</summary>
+                    <p>Aegis is a passion project. No paywalls, no premium tiers, no ads.</p>
+                </details>
+                <details class="faq__item">
+                    <summary>Can I request features?</summary>
+                    <p>Yes. Feature suggestions are welcome in the Discord. Requests that fit the tool's scope get prioritized based on demand.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__inner">
+            <div class="footer__left">
+                <img src="Aegis.png" alt="Aegis" class="footer__logo" />
+                <span class="footer__brand">Aegis</span>
+            </div>
+            <div class="footer__right">
+                <nav class="footer__links">
+                    <a href="#overview">Overview</a>
+                    <a href="#features">Features</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="https://discord.gg/Aegis" target="_blank" rel="noopener">Discord</a>
+                </nav>
+                <span class="footer__note">
+                    © 2026 Aegis. Not affiliated with or endorsed by Roblox Corporation.
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
