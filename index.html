@@ -4,273 +4,480 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0c09">
-  <meta name="description" content="Aegis previews custom Roblox profile and interface states locally in your browser.">
-  <meta property="og:title" content="Aegis — Local Roblox profile preview">
-  <meta property="og:description" content="Change what you see locally without changing real account data.">
+  <meta name="description" content="Aegis — a fast, clean script executor with smooth animations and a modern UI.">
+  <meta property="og:title" content="Aegis — Script Executor">
+  <meta property="og:description" content="Fast. Clean. Smooth. The executor built different.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="Aegis.png">
-  <title>Aegis — Local Roblox profile preview</title>
+  <title>Aegis — Script Executor</title>
   <link rel="icon" href="Aegis.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6.0.3-20260719">
-  <script src="script.js?v=6.0.3-20260719" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- Shared interface icons adapted from Lucide (ISC): https://lucide.dev -->
-  <svg class="icon-sprite" aria-hidden="true">
-    <symbol id="icon-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
-    <symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
-    <symbol id="icon-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
-    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
-    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
-    <symbol id="icon-window" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M2 9h20"/><path d="M6 6.5h.01"/><path d="M9 6.5h.01"/></symbol>
-    <symbol id="icon-folder-plus" viewBox="0 0 24 24"><path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
-    <symbol id="icon-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></symbol>
-    <symbol id="icon-gamepad" viewBox="0 0 24 24"><path d="M6 12h4"/><path d="M8 10v4"/><path d="M15 13h.01"/><path d="M18 11h.01"/><rect width="20" height="12" x="2" y="6" rx="4"/></symbol>
-    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
-    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"/><path d="m9 12 2 2 4-4"/></symbol>
-    <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/></symbol>
-    <symbol id="icon-network" viewBox="0 0 24 24"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4"/><path d="M5 16v-2a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></symbol>
-    <symbol id="icon-plug" viewBox="0 0 24 24"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a6 6 0 0 1-12 0V8Z"/></symbol>
-    <symbol id="icon-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
-    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
-    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
-    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
-    <symbol id="icon-badge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></symbol>
-    <symbol id="icon-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9Z"/><path d="m11 3-3 6 4 12 4-12-3-6"/><path d="M2 9h20"/></symbol>
-    <symbol id="icon-crown" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7Z"/><path d="M5 20h14"/></symbol>
-    <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.1L5 10l5.1 1.9L12 17l1.9-5.1L19 10l-5.1-1.9Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></symbol>
-    <symbol id="icon-box" viewBox="0 0 24 24"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8 9 5v9"/><path d="m21 8-9 5v9"/></symbol>
+
+  <!-- ── SVG sprite ── -->
+  <svg aria-hidden="true" style="display:none">
+    <symbol id="i-dl"     viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-menu"   viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+    <symbol id="i-x"      viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-play"   viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-zap"    viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="i-code"   viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12-8.58 3.91a2 2 0 0 1-1.66 0L3 12"/><path d="m22 17-8.58 3.91a2 2 0 0 1-1.66 0L3 17"/></symbol>
+    <symbol id="i-ext"    viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-check"  viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
+    <symbol id="i-chev"   viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
   </svg>
+
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ── Header ── -->
   <header class="site-header" id="siteHeader">
     <div class="container header__inner">
-      <a class="brand" href="#overview" aria-label="Aegis home">
+      <a class="brand" href="#hero" aria-label="Aegis home">
         <span class="brand__mark"><img src="Aegis.png" alt=""></span>
-        <span>Aegis</span><span class="brand__version">6.0.3</span>
+        <span class="brand__name">Aegis</span>
+        <span class="brand__ver">v1.0</span>
       </a>
-      <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#features">Modules</a><a href="#workflow">Install</a><a href="#safety">Details</a><a href="#faq">FAQ</a>
+      <nav class="desk-nav" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
       </nav>
       <div class="header__actions">
-        <a class="text-link" href="https://discord.gg/aegiss" target="_blank" rel="noopener noreferrer">Discord</a>
-        <a class="button button--small" href="#download">Download</a>
+        <a class="txt-link" href="https://discord.gg/larpblox" target="_blank" rel="noopener">Discord</a>
+        <a class="btn btn--sm" href="#download">Download</a>
       </div>
-      <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false"><svg class="icon menu-button__open" aria-hidden="true"><use href="#icon-menu"/></svg><svg class="icon menu-button__close" aria-hidden="true"><use href="#icon-x"/></svg></button>
+      <button class="ham" id="hamBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg class="ham__open"  aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="ham__close" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
     </div>
-    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
-      <a href="#features">Modules</a><a href="#workflow">Install</a><a href="#safety">Details</a><a href="#faq">FAQ</a>
-      <div class="mobile-nav__actions"><a href="https://discord.gg/aegiss" target="_blank" rel="noopener noreferrer">Discord</a><a class="button" href="#download">Download</a></div>
+    <nav class="mob-nav" id="mobileNav" hidden aria-label="Mobile">
+      <a href="#features">Features</a>
+      <a href="#demo">Demo</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+      <div class="mob-nav__ctas">
+        <a href="https://discord.gg/larpblox" target="_blank" rel="noopener">Discord</a>
+        <a class="btn" href="#download">Download</a>
+      </div>
     </nav>
   </header>
+
   <main id="main">
 
-    <section class="hero" id="overview">
+    <!-- ═══════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════ -->
+    <section class="hero" id="hero">
       <div class="container hero__grid">
-        <div class="hero__copy">
-          <p class="product-code">AEGIS / CHROMIUM EXTENSION</p>
-          <h1><span class="hero-word hero-word--roblox">Roblox,</span><br><span class="hero-word hero-word--rewritten">rewritten.</span></h1>
-          <p class="hero__lead">Preview custom identities, avatars, balances, and inventory layouts directly on Roblox pages. The changes are visual; review the extension permissions before installing.</p>
-          <div class="hero__actions">
-            <a class="button button--large" href="#download">Download Aegis <svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"/></svg></a>
-            <a class="button button--large button--secondary" href="#workflow">Installation steps</a>
+
+        <!-- Copy -->
+        <div class="hero__copy" data-reveal>
+          <p class="eyebrow">AEGIS / SCRIPT EXECUTOR</p>
+          <h1>Execute<br><span class="acid">without</span><br>compromise.</h1>
+          <p class="hero__lead">A clean, fast executor wrapped in a UI that doesn't look like it was built in 2014. Smooth animations, instant attach, and a built-in console — all in one lightweight package.</p>
+          <div class="hero__ctas">
+            <a class="btn btn--lg" href="#download">
+              Download Aegis
+              <svg aria-hidden="true"><use href="#i-dl"/></svg>
+            </a>
+            <a class="btn btn--lg btn--ghost" href="#demo">See it live</a>
           </div>
-          <dl class="hero__facts">
-            <div><dt>Version</dt><dd>6.0.3</dd></div>
-            <div><dt>Package</dt><dd>3.2 MB</dd></div>
-            <div><dt>Manifest</dt><dd>V3</dd></div>
+          <dl class="hero__pills">
+            <div><dt>Version</dt><dd>1.0.0</dd></div>
+            <div><dt>Size</dt><dd>~69 MB</dd></div>
+            <div><dt>Platform</dt><dd>Windows</dd></div>
             <div><dt>Price</dt><dd>Free</dd></div>
           </dl>
         </div>
-        <div class="product-shell larp-shell" data-label="AEGIS LARP / INTERACTIVE PREVIEW" aria-label="Interactive preview of the Aegis larp interface">
-          <div class="larp-ui">
-            <aside class="larp-left">
-              <div class="larp-brand"><img src="Aegis.png" alt=""><strong>Aegis</strong><small>larp</small></div>
-              <span class="larp-rail-label">MODULES</span>
-              <!-- Navigation icons adapted from Lucide (ISC): https://lucide.dev -->
-              <div class="mock-tabs larp-nav" role="tablist" aria-label="Preview modules">
-                <button class="mock-nav is-active" id="tab-identity" type="button" role="tab" aria-selected="true" aria-controls="panel-identity" data-preview-tab="identity" aria-label="Profile" title="Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></button>
-                <button class="mock-nav" id="tab-balance" type="button" role="tab" aria-selected="false" aria-controls="panel-balance" tabindex="-1" data-preview-tab="balance" aria-label="Currency" title="Currency"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3v4a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V5"/><path d="M16 12h5"/></svg></button>
-                <button class="mock-nav" id="tab-inventory" type="button" role="tab" aria-selected="false" aria-controls="panel-inventory" tabindex="-1" data-preview-tab="inventory" aria-label="Inventory" title="Inventory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="m3 8 9 5v9"/><path d="m21 8-9 5v9"/></svg></button>
-                <button class="mock-nav" id="tab-avatar" type="button" role="tab" aria-selected="false" aria-controls="panel-avatar" tabindex="-1" data-preview-tab="avatar" aria-label="Avatar" title="Avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46A2 2 0 0 0 2.25 5.2l-.7 3.49a1 1 0 0 0 .65 1.15L6 11.5V22h12V11.5l3.8-1.66a1 1 0 0 0 .65-1.15l-.7-3.49a2 2 0 0 0-1.37-1.74Z"/></svg></button>
-              </div>
-              <button class="larp-reset" type="button" data-demo-reset>RESET</button>
-            </aside>
 
-            <section class="larp-center">
-              <div class="larp-toolbar"><strong id="previewTitle">Profile</strong><span>ALT + L</span></div>
-              <label class="larp-search" for="larpSearch"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg><input id="larpSearch" type="search" placeholder="Search" autocomplete="off"><kbd>/</kbd></label>
-
-              <section class="mock-panel is-active" id="panel-identity" role="tabpanel" aria-labelledby="tab-identity" data-preview-panel="identity">
-                <div class="larp-columns">
-                  <div class="larp-column">
-                    <div class="larp-tabs"><button class="is-active" type="button">Profile</button><button type="button">Stats</button></div>
-                    <div class="larp-section-title">IDENTITY</div>
-                    <div class="larp-control" data-search-label="username"><label for="demoField">Username</label><input class="larp-input" id="demoField" value="Local Preview"></div>
-                    <div class="larp-control" data-search-label="display name"><label for="demoDisplayName">Display Name</label><input class="larp-input" id="demoDisplayName" value="Aegis User"></div>
-                    <div class="larp-control" data-search-label="user id"><label for="demoUserId">User ID</label><input class="larp-input larp-mono" id="demoUserId" value="18402931" inputmode="numeric"></div>
-                    <button class="larp-action" type="button" data-demo-randomize>LOAD NEXT PROFILE</button>
-                  </div>
-                  <div class="larp-column">
-                    <div class="larp-tabs"><button class="is-active" type="button">Social</button><button type="button">Badges</button></div>
-                    <div class="larp-section-title">PROFILE STATS</div>
-                    <div class="larp-control" data-search-label="friends"><label for="demoFriends">Friends</label><input class="larp-number larp-stat-input" id="demoFriends" value="1.2K"></div>
-                    <div class="larp-control" data-search-label="followers"><label for="demoFollowers">Followers</label><input class="larp-number larp-stat-input" id="demoFollowers" value="48K"></div>
-                    <div class="larp-control" data-search-label="following"><label for="demoFollowing">Following</label><input class="larp-number larp-stat-input" id="demoFollowing" value="12.4K"></div>
-                    <div class="larp-control" data-search-label="status"><label for="demoStatus">Status</label><select class="larp-select" id="demoStatus"><option>Online</option><option>Offline</option><option>Studio</option></select></div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="mock-panel" id="panel-balance" role="tabpanel" aria-labelledby="tab-balance" data-preview-panel="balance" hidden>
-                <div class="larp-columns">
-                  <div class="larp-column">
-                    <div class="larp-tabs"><button class="is-active" type="button">Robux</button><button type="button">History</button></div>
-                    <div class="larp-section-title">CURRENCY</div>
-                    <div class="larp-control" data-search-label="balance robux"><label>Balance</label><span class="larp-number" id="demoBalance">12,500</span></div>
-                    <div class="larp-control larp-slider-row" data-search-label="amount slider"><label for="balanceRange">Amount</label><input class="balance-range" id="balanceRange" type="range" min="0" max="100000" step="500" value="12500"><output id="balanceOutput">12.5K</output></div>
-                    <div class="larp-control" data-search-label="pending robux"><label for="pendingAmount">Pending</label><input class="larp-input larp-number-input" id="pendingAmount" type="number" value="850" min="0"></div>
-                    <div class="larp-control" data-search-label="currency"><label for="currencyType">Currency</label><select class="larp-select" id="currencyType"><option>Robux</option><option>Value</option><option>RAP</option></select></div>
-                  </div>
-                  <div class="larp-column">
-                    <div class="larp-tabs"><button class="is-active" type="button">Overview</button><button type="button">Graph</button></div>
-                    <div class="larp-section-title">ACTIVITY</div>
-                    <div class="mini-chart" aria-hidden="true"><span style="--h:31%"></span><span style="--h:45%"></span><span style="--h:38%"></span><span style="--h:68%"></span><span style="--h:58%"></span><span style="--h:82%"></span><span style="--h:74%"></span><span style="--h:100%"></span></div>
-                    <div class="larp-control"><label>Spent</label><span class="larp-number">4.2K</span></div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="mock-panel" id="panel-inventory" role="tabpanel" aria-labelledby="tab-inventory" data-preview-panel="inventory" hidden>
-                <div class="larp-columns">
-                  <div class="larp-column larp-column--full">
-                    <div class="larp-tabs"><button class="is-active" type="button">Limiteds</button><button type="button">Inventory</button><button type="button">Values</button></div>
-                    <div class="larp-section-title">ITEMS</div>
-                    <div class="inventory-grid"><button class="is-selected" type="button"><span><svg class="icon" aria-hidden="true"><use href="#icon-gem"/></svg></span><small>Celestial</small><b>12.4K</b></button><button type="button"><span><svg class="icon" aria-hidden="true"><use href="#icon-crown"/></svg></span><small>Void Crown</small><b>8.7K</b></button><button type="button"><span><svg class="icon" aria-hidden="true"><use href="#icon-sparkles"/></svg></span><small>Star Gaze</small><b>6.2K</b></button><button type="button"><span><svg class="icon" aria-hidden="true"><use href="#icon-box"/></svg></span><small>Neon Core</small><b>4.9K</b></button></div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="mock-panel" id="panel-avatar" role="tabpanel" aria-labelledby="tab-avatar" data-preview-panel="avatar" hidden>
-                <div class="larp-columns">
-                  <div class="larp-column">
-                    <div class="larp-tabs"><button class="is-active" type="button">Avatar</button><button type="button">Wear</button></div>
-                    <div class="larp-section-title">APPEARANCE</div>
-                    <div class="avatar-stage"><span class="avatar-orbit"></span><img src="Aegis.png" alt="Aegis avatar preview"></div>
-                  </div>
-                  <div class="larp-column">
-                    <div class="larp-tabs"><button class="is-active" type="button">Options</button></div>
-                    <div class="larp-section-title">PRESET</div>
-                    <div class="option-grid" aria-label="Avatar preview options"><button class="is-selected" type="button">Classic</button><button type="button">Headless</button><button type="button">Dark</button><button type="button">Neon</button></div>
-                    <div class="larp-control" data-search-label="face"><label for="faceSelect">Face</label><select class="larp-select" id="faceSelect"><option>Default</option><option>Playful</option><option>Serious</option></select></div>
-                    <div class="larp-control" data-search-label="rig"><label for="rigSelect">Rig</label><select class="larp-select" id="rigSelect"><option>R15</option><option>R6</option></select></div>
-                  </div>
-                </div>
-              </section>
-              <div class="larp-status"><span aria-live="polite">Ready</span><span>CLICK MODULES · / TO SEARCH</span></div>
-            </section>
-
-            <aside class="larp-account">
-              <span class="account-label">ACCOUNT</span>
-              <div class="account-avatar"><img src="Aegis.png" alt=""></div>
-              <strong><span id="demoName">Local Preview</span> <svg id="demoBadge" class="icon account-badge" aria-label="Verified"><use href="#icon-badge"/></svg></strong>
-              <small id="demoHandle">@local_preview</small>
-              <div class="account-toggles">
-                <div><span>Verified</span><button class="square-check is-checked" type="button" role="switch" aria-checked="true" aria-label="Toggle preview verified badge" data-demo-verified><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg></button></div>
-                <div><span>Premium</span><button class="square-check" type="button" role="switch" aria-checked="true" aria-label="Toggle preview premium status" data-account-toggle><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg></button></div>
-              </div>
-            </aside>
-            <span class="larp-resize" aria-hidden="true"></span>
+        <!-- Live UI demo shell -->
+        <div class="ui-shell" data-reveal aria-label="Interactive Aegis UI preview">
+          <div class="ui-shell__bar">
+            <span class="ui-shell__dot ui-shell__dot--red"></span>
+            <span class="ui-shell__dot"></span>
+            <span class="ui-shell__dot"></span>
+            <span class="ui-shell__title">Aegis</span>
+            <span class="ui-shell__addr">aegis-executor</span>
           </div>
-          <p class="preview-interaction-hint"><span aria-hidden="true"></span><strong>LIVE DEMO</strong> Click modules, edit fields, and search controls</p>
-        </div>
+
+          <!-- Tabs -->
+          <div class="ui-tabs">
+            <button class="ui-tab ui-tab--active" data-tab="start">⭐ Start</button>
+            <button class="ui-tab"                data-tab="editor">📄 Untitled 1 <span class="ui-tab__x">×</span></button>
+            <span class="ui-tab ui-tab--plus">+</span>
+            <div class="ui-tabs__right">
+              <button class="ui-btn-attach">↪ Attach</button>
+            </div>
+          </div>
+
+          <!-- Panels -->
+          <div class="ui-body">
+            <!-- Sidebar -->
+            <aside class="ui-sidebar">
+              <div class="ui-sidebar__head">
+                <span>Explorer</span>
+                <button class="ui-icon-btn">‹</button>
+              </div>
+              <div class="ui-filter">
+                <span class="ui-filter__icon">🔍</span>
+                <span class="ui-filter__placeholder">Filter scripts</span>
+              </div>
+              <div class="ui-tree">
+                <div class="ui-tree__section">› SCRIPTS</div>
+                <div class="ui-tree__item ui-tree__item--active" data-script="hello">📄 Untitled_1.luau</div>
+                <div class="ui-tree__item" data-script="esp">📄 esp.luau</div>
+                <div class="ui-tree__item" data-script="inf">📄 inf_jump.luau</div>
+                <div class="ui-tree__section" style="margin-top:10px">› AUTO EXECUTE</div>
+                <div class="ui-tree__empty">Nothing runs on attach.</div>
+              </div>
+            </aside>
+
+            <!-- Start page -->
+            <div class="ui-page" id="page-start">
+              <div class="ui-start__content">
+                <h2 class="ui-start__title">Aegis</h2>
+                <p class="ui-start__sub">No client attached.</p>
+                <div class="ui-start__section-label">START</div>
+                <button class="ui-start__action" id="demoNewScript">
+                  <span class="ui-start__action-icon acid">+</span> New script
+                </button>
+                <div class="ui-start__section-label" style="margin-top:20px">RECENT SCRIPTS</div>
+                <button class="ui-start__action" data-open-script="hello">📄 Untitled_1.luau</button>
+                <button class="ui-start__action" data-open-script="esp">📄 esp.luau</button>
+              </div>
+              <div class="ui-tip">
+                <div class="ui-tip__label">TIP OF THE DAY</div>
+                <p><code>saveinstance</code> serializes an instance into a Roblox Studio format.</p>
+              </div>
+            </div>
+
+            <!-- Editor page -->
+            <div class="ui-page ui-page--hidden" id="page-editor">
+              <div class="ui-editor">
+                <div class="ui-editor__crumb">📄 <span id="editorFilename">Untitled 1</span></div>
+                <div class="ui-editor__area">
+                  <div class="ui-editor__gutter" id="editorGutter">1</div>
+                  <textarea class="ui-editor__code" id="editorCode" spellcheck="false">print("Hello, world!");</textarea>
+                </div>
+                <div class="ui-console">
+                  <div class="ui-console__bar">
+                    <span>› CONSOLE</span>
+                    <div class="ui-console__controls">
+                      <button class="ui-icon-btn" id="consoleClear" title="Clear">⊘</button>
+                      <button class="ui-icon-btn" title="Close">×</button>
+                    </div>
+                  </div>
+                  <div class="ui-console__output" id="consoleOutput">
+                    <div class="ui-console__line">Aegis ready, waiting for a client.</div>
+                  </div>
+                  <div class="ui-console__typing" id="typingDots" hidden>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status bar -->
+          <div class="ui-statusbar">
+            <span>› <span id="statusText">Start</span></span>
+            <span class="ui-statusbar__right">
+              <span class="ui-statusbar__client">
+                <span class="ui-statusbar__dot"></span> No client
+              </span>
+            </span>
+          </div>
+        </div><!-- /ui-shell -->
+
       </div>
-      <div class="container support-line"><span>Chrome</span><span>Edge</span><span>Brave</span><span>Opera GX</span><small>Chromium browsers</small></div>
     </section>
 
-    <section class="section section--border" id="workflow">
+    <!-- ═══════════════════════════════════════
+         FEATURES
+    ═══════════════════════════════════════ -->
+    <section class="section section--border" id="features">
       <div class="container">
-        <div class="section-heading"><p class="section-number">01 / INSTALL</p><h2>Load the extension manually.</h2><p>Aegis is distributed as a ZIP, not through the Chrome Web Store.</p></div>
-        <ol class="steps">
-          <li><span class="step__number">01</span><div class="step__icon"><svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg></div><h3>Extract the ZIP</h3><p>Download Aegis and extract it somewhere you will not delete.</p><span class="step__meta">Keep the extracted folder</span></li>
-          <li><span class="step__number">02</span><div class="step__icon"><svg class="icon" aria-hidden="true"><use href="#icon-window"/></svg></div><h3>Open Extensions</h3><p>Turn on Developer mode from your browser's Extensions page.</p><button class="copy-command" type="button" data-copy="chrome://extensions">chrome://extensions <span>Copy</span></button></li>
-          <li><span class="step__number">03</span><div class="step__icon"><svg class="icon" aria-hidden="true"><use href="#icon-folder-plus"/></svg></div><h3>Load unpacked</h3><p>Click “Load unpacked” and select the extracted Aegis folder.</p><span class="step__meta">The extension is now available</span></li>
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">01 / MODULES</p>
+          <h2>Built for the<br>people who notice.</h2>
+          <p>Every detail was considered. Every edge was smoothed.</p>
+        </div>
+
+        <ul class="feat-grid">
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-zap"/></svg>
+            </div>
+            <h3>Instant Attach</h3>
+            <p>One click to hook. No waiting, no guessing. The Attach button is always in reach.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-code"/></svg>
+            </div>
+            <h3>Clean Editor</h3>
+            <p>Consolas-rendered code editor with line numbers, acid caret, and smooth scroll sync.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-layers"/></svg>
+            </div>
+            <h3>Multi-Tab Scripts</h3>
+            <p>Open multiple scripts at once. Each tab remembers its own code. Right-click to rename, duplicate, or delete.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-shield"/></svg>
+            </div>
+            <h3>Bootstrap Loader</h3>
+            <p>Ships alongside a configurable bootstrapper for seamless setup on fresh machines.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-play"/></svg>
+            </div>
+            <h3>Live Console</h3>
+            <p>Per-line animated console output with a wave typing indicator. See exactly what's running.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-ext"/></svg>
+            </div>
+            <h3>Self-Contained</h3>
+            <p>No .NET install required. Single exe, ships with everything bundled. Extract and run.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         DEMO SECTION (full-width interactive)
+    ═══════════════════════════════════════ -->
+    <section class="section" id="demo">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">02 / DEMO</p>
+          <h2>Try it right here.</h2>
+          <p>Click the scripts, type in the editor, hit Run. It's the real UI, live in the browser.</p>
+        </div>
+
+        <div class="demo-shell" data-reveal>
+          <div class="demo-shell__tabs">
+            <button class="demo-tab demo-tab--active" data-demo="start">Start page</button>
+            <button class="demo-tab" data-demo="editor">Editor + Console</button>
+            <button class="demo-tab" data-demo="context">Right-click menu</button>
+          </div>
+
+          <div class="demo-panel" id="demo-start">
+            <div class="demo-mockup demo-mockup--start">
+              <div class="dm-title">Aegis</div>
+              <div class="dm-sub">No client attached.</div>
+              <div class="dm-label">START</div>
+              <div class="dm-action dm-action--highlight">+ New script</div>
+              <div class="dm-label" style="margin-top:16px">RECENT SCRIPTS</div>
+              <div class="dm-action">📄 Untitled_1.luau</div>
+              <div class="dm-action">📄 esp.luau</div>
+            </div>
+            <div class="demo-tip">
+              <div class="demo-tip__card">
+                <div class="demo-tip__label">TIP OF THE DAY</div>
+                <p><code>getgenv()</code> stores values that persist across script executions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-panel demo-panel--hidden" id="demo-editor">
+            <div class="demo-editor-wrap">
+              <div class="demo-editor-crumb">📄 Untitled 1</div>
+              <div class="demo-editor-body">
+                <div class="demo-gutter" id="demoGutter">1<br>2<br>3<br>4<br>5</div>
+                <textarea class="demo-code" id="demoCode" spellcheck="false">local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+local char = lp.Character
+
+print("Aegis ready")
+</textarea>
+              </div>
+              <div class="demo-console">
+                <div class="demo-console-bar">
+                  <span>› CONSOLE</span>
+                  <button class="demo-run-btn" id="demoRunBtn">▶ Run</button>
+                </div>
+                <div class="demo-console-out" id="demoConsoleOut">
+                  <span class="demo-console-line">Aegis ready, waiting for a client.</span>
+                </div>
+                <div class="demo-typing" id="demoTyping" hidden>
+                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-panel demo-panel--hidden" id="demo-context">
+            <div class="demo-ctx-wrap">
+              <div class="demo-ctx-sidebar">
+                <div class="demo-ctx-section">› SCRIPTS</div>
+                <div class="demo-ctx-item demo-ctx-item--selected">📄 Untitled_1.luau</div>
+                <div class="demo-ctx-item">📄 esp.luau</div>
+                <div class="demo-ctx-item">📄 inf_jump.luau</div>
+              </div>
+              <div class="demo-ctx-menu" id="demoCtxMenu">
+                <button class="demo-ctx-btn">📂  Open</button>
+                <button class="demo-ctx-btn">▶  Execute</button>
+                <hr class="demo-ctx-sep">
+                <button class="demo-ctx-btn">📋  Duplicate</button>
+                <button class="demo-ctx-btn">✏  Rename</button>
+                <button class="demo-ctx-btn">📁  Show in Explorer</button>
+                <hr class="demo-ctx-sep">
+                <button class="demo-ctx-btn demo-ctx-btn--danger">🗑  Delete</button>
+              </div>
+              <p class="demo-ctx-hint">Right-click any script in the sidebar to get this menu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         INSTALL
+    ═══════════════════════════════════════ -->
+    <section class="section section--border" id="install">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">03 / INSTALL</p>
+          <h2>Up in three steps.</h2>
+        </div>
+
+        <ol class="steps" data-reveal>
+          <li>
+            <span class="step-num">01</span>
+            <div class="step-icon">
+              <svg aria-hidden="true"><use href="#i-dl"/></svg>
+            </div>
+            <h3>Download</h3>
+            <p>Grab the zip from the Download section. Extract it anywhere — desktop, a folder, wherever.</p>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <div class="step-icon">
+              <svg aria-hidden="true"><use href="#i-layers"/></svg>
+            </div>
+            <h3>Place bootstrapper</h3>
+            <p>Drop <code>aegis_bootstrapper.bat</code> into the same folder as <code>Aegis.exe</code>. The app looks for it on launch.</p>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <div class="step-icon">
+              <svg aria-hidden="true"><use href="#i-play"/></svg>
+            </div>
+            <h3>Run & attach</h3>
+            <p>Open <code>Aegis.exe</code>. Hit <strong>Attach</strong> once your game is loaded. Done.</p>
+          </li>
         </ol>
       </div>
     </section>
 
-    <section class="section" id="features">
-      <div class="container">
-        <div class="section-heading"><p class="section-number">02 / MODULES</p><h2>What Aegis can do.</h2><p>Every module changes the page shown on your device. It does not change the Roblox account behind it.</p></div>
-        <div class="module-list">
-          <article><span>01</span><div><h3>Identity</h3><p>Username, display name, thumbnail, Premium state, and verification badge.</p></div><small>PROFILE</small></article>
-          <article><span>02</span><div><h3>Avatar</h3><p>Outfits, face textures, head styles, and worn-item combinations.</p></div><small>AVATAR</small></article>
-          <article><span>03</span><div><h3>Economy UI</h3><p>Displayed Robux balance, transaction history, values, and related interface text.</p></div><small>INTERFACE</small></article>
-          <article><span>04</span><div><h3>Inventory</h3><p>Local item lists and purchase-screen mockups for screenshots and videos.</p></div><small>CONTENT</small></article>
-          <article><span>05</span><div><h3>Desktop bridge</h3><p>An optional, separately launched component for supported in-game visual settings.</p></div><small>OPTIONAL</small></article>
+    <!-- ═══════════════════════════════════════
+         DOWNLOAD
+    ═══════════════════════════════════════ -->
+    <section class="section" id="download">
+      <div class="container dl-grid" data-reveal>
+        <div class="dl-copy">
+          <p class="eyebrow">04 / DOWNLOAD</p>
+          <h2>Get Aegis.</h2>
+          <p>Self-contained. No runtime needed. No install wizard. Just unzip and go.</p>
+          <ul class="dl-list">
+            <li>Windows 10 / 11 (x64)</li>
+            <li>No .NET install required</li>
+            <li>~69 MB, single exe</li>
+            <li>Free forever</li>
+          </ul>
         </div>
-        <aside class="sync-callout" id="ingame-sync">
-          <div class="sync-callout__icon" aria-hidden="true"><span><svg class="icon"><use href="#icon-monitor"/></svg></span><i></i><span><svg class="icon"><use href="#icon-gamepad"/></svg></span></div>
-          <div class="sync-callout__copy"><p class="section-number">IN-GAME SYNC</p><h3>Want your stuff to show in-game?</h3><p>The browser extension changes Roblox pages. To carry supported identity and avatar preview settings into the Roblox app, open Roblox to the Home screen and then run <code>Aegis BootStrapper.bat</code>.</p><div class="sync-callout__steps"><span><b>01</b>Open the Roblox app</span><span><b>02</b>Stay on the Home screen</span><span><b>03</b>Run the bootstrapper</span></div><small>The bootstrapper is included in the ZIP and is not required for browser-only previews.</small></div>
-          <a class="button button--secondary" href="#download">Included in download <svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"/></svg></a>
-        </aside>
-      </div>
-    </section>
 
-    <section class="section section--border transparency" id="safety">
-      <div class="container transparency__grid">
-        <div class="transparency__copy"><p class="section-number">03 / PERMISSIONS</p><h2>Read this before installing.</h2><p>The current 6.0.3 manifest requests <code>storage</code>, <code>alarms</code>, and <code>tabs</code>, plus access to multiple Roblox and third-party hosts.</p><div class="notice"><span><svg class="icon" aria-hidden="true"><use href="#icon-alert"/></svg></span><p>This package is not fully offline. Its manifest includes an IP address service, a Railway-hosted service, a direct IP address, Rolimons, and two localhost ports. Only install it if you understand and accept that access.</p></div></div>
-        <div class="boundary-card">
-          <div class="boundary-card__head"><span>Manifest v3 access</span><span class="manifest-source">FROM 6.0.3 ZIP</span></div>
-          <div class="boundary-list permission-list">
-            <div><span class="boundary-icon boundary-icon--info"><svg class="icon" aria-hidden="true"><use href="#icon-shield"/></svg></span><span><strong>Browser permissions</strong><small>Storage, alarms, and tabs</small></span></div>
-            <div><span class="boundary-icon boundary-icon--info"><svg class="icon" aria-hidden="true"><use href="#icon-globe"/></svg></span><span><strong>Roblox and Rolimons</strong><small>Page and API host permissions</small></span></div>
-            <div><span class="boundary-icon boundary-icon--warn"><svg class="icon" aria-hidden="true"><use href="#icon-network"/></svg></span><span><strong>External network hosts</strong><small>ipify, Railway service, and a direct IP endpoint</small></span></div>
-            <div><span class="boundary-icon boundary-icon--info"><svg class="icon" aria-hidden="true"><use href="#icon-plug"/></svg></span><span><strong>Local bridge ports</strong><small>localhost:3000 and localhost:8765</small></span></div>
+        <div class="dl-card">
+          <div class="dl-card__top">
+            <div class="dl-logo"><img src="Aegis.png" alt="Aegis"></div>
+            <div class="dl-status"><span class="dl-status__dot"></span> Latest release</div>
           </div>
-          <p class="permission-note">Permission summary taken directly from the downloadable manifest on July 18, 2026.</p>
+          <div class="dl-card__label">AEGIS EXECUTOR</div>
+          <h3 class="dl-card__ver">v1.0.0</h3>
+          <p class="dl-card__desc">Windows x64 · self-contained · free</p>
+          <a class="btn btn--lg" href="https://file.garden/aq7pGjhhHV7kFaey/Aegis.zip" id="dlBtn" download>
+            Download Aegis
+            <svg aria-hidden="true"><use href="#i-dl"/></svg>
+          </a>
+          <div class="dl-hash">
+            <span class="dl-hash__label">SHA-256</span>
+            <code class="dl-hash__val">Aegis.zip</code>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section download-section" id="download">
-      <div class="container release-block">
-        <div class="release-copy"><p class="section-number">04 / RELEASE</p><h2>Aegis 6.0.3</h2><p>The current download is a 3.2 MB ZIP containing the Manifest V3 browser extension and the optional Windows bridge launcher.</p><ul><li>Identity, avatar, economy, and inventory modules</li><li>Browser permissions: storage, alarms, and tabs</li><li>Includes <code>Aegis BootStrapper.bat</code> for in-game sync</li></ul></div>
-        <aside class="download-card"><div class="download-card__top"><span class="download-logo"><img src="Aegis.png" alt=""></span><span class="release-status"><i></i>Inspected release</span></div><span class="download-card__label">AEGIS.ZIP · 3.2 MB</span><h3>Download 6.0.3</h3><p>Extract the ZIP and load the <code>Chrome-Extension</code> folder through your browser.</p><a class="button button--large button--full" href="https://file.garden/alJib1uIhByXg4U5/Aegis.zip">Download ZIP <svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg></a><div class="release-integrity"><span>SHA-256</span><code>137665a1a09f9ae32d06c6e02e4f37d8b3910cc76c0f50d135d2765aecf6cedb</code><button type="button" data-copy="137665a1a09f9ae32d06c6e02e4f37d8b3910cc76c0f50d135d2765aecf6cedb">Copy</button></div><p class="download-warning">Checksum recorded from the linked ZIP on July 18, 2026. A matching hash confirms the file is unchanged; it does not prove the software is safe.</p></aside>
-      </div>
-    </section>
-
+    <!-- ═══════════════════════════════════════
+         FAQ
+    ═══════════════════════════════════════ -->
     <section class="section section--border" id="faq">
-      <div class="container faq-grid">
-        <div class="faq-intro"><p class="section-number">05 / FAQ</p><h2>Common questions.</h2><p>For setup help or release updates, use the Discord server.</p><a class="plain-link" href="https://discord.gg/aegiss" target="_blank" rel="noopener noreferrer">Open Discord <svg class="icon" aria-hidden="true"><use href="#icon-external"/></svg></a></div>
+      <div class="container faq-grid" data-reveal>
+        <div class="faq-intro">
+          <p class="eyebrow">05 / FAQ</p>
+          <h2>Common questions.</h2>
+          <a class="plain-link" href="https://discord.gg/larpblox" target="_blank" rel="noopener">Ask on Discord ↗</a>
+        </div>
         <div class="faq">
-          <details open><summary>What does Aegis change?<span aria-hidden="true"><svg class="icon"><use href="#icon-chevron"/></svg></span></summary><p>Supported text, images, values, and interface states displayed in your browser. It does not modify real Roblox account data.</p></details>
-          <details><summary>Can other users see the preview?<span aria-hidden="true"><svg class="icon"><use href="#icon-chevron"/></svg></span></summary><p>No. Other people continue to see the account information supplied by Roblox.</p></details>
-          <details><summary>Why is Developer mode required?<span aria-hidden="true"><svg class="icon"><use href="#icon-chevron"/></svg></span></summary><p>Aegis is currently distributed as an unpacked extension rather than through the Chrome Web Store.</p></details>
-          <details><summary>How do I sync the preview in-game?<span aria-hidden="true"><svg class="icon"><use href="#icon-chevron"/></svg></span></summary><p>Open the Roblox app and stay on its Home screen, then run <code>Aegis BootStrapper.bat</code> from the downloaded package. The bootstrapper connects supported identity and avatar preview settings to the game client; browser-only previews work without it.</p></details>
-          <details><summary>Is Aegis risk-free?<span aria-hidden="true"><svg class="icon"><use href="#icon-chevron"/></svg></span></summary><p>No third-party extension can be guaranteed risk-free. Review the requested permissions, inspect the package if you can, and only install it if you trust the download source.</p></details>
-          <details><summary>How do I remove the changes?<span aria-hidden="true"><svg class="icon"><use href="#icon-chevron"/></svg></span></summary><p>Reset or disable the modules. You can also remove Aegis from your browser's Extensions page.</p></details>
+          <details open>
+            <summary>Do I need to install anything?<span aria-hidden="true"></span></summary>
+            <p>No. Aegis is fully self-contained. The exe bundles the entire .NET 8 runtime. Just extract the zip and run.</p>
+          </details>
+          <details>
+            <summary>What is aegis_bootstrapper.bat?<span aria-hidden="true"></span></summary>
+            <p>It's a setup script that runs silently when you launch Aegis. Place it next to <code>Aegis.exe</code>. If it's missing, Aegis will tell you where to put it.</p>
+          </details>
+          <details>
+            <summary>Why does my antivirus flag it?<span aria-hidden="true"></span></summary>
+            <p>Self-contained .NET executables commonly trigger heuristic detections. Add the folder to your AV exclusions. Aegis does not contain malicious code.</p>
+          </details>
+          <details>
+            <summary>Can I run multiple scripts?<span aria-hidden="true"></span></summary>
+            <p>Yes. Open as many tabs as you want. Each one holds its own code independently. Use the + button in the tab bar or right-click a script in the sidebar.</p>
+          </details>
+          <details>
+            <summary>Is there a mobile version?<span aria-hidden="true"></span></summary>
+            <p>Not currently. Aegis is a Windows desktop application. A web or mobile companion is not planned for v1.</p>
+          </details>
         </div>
       </div>
     </section>
+
   </main>
 
-  <dialog class="download-dialog" id="downloadDialog" aria-labelledby="downloadDialogTitle" aria-describedby="downloadDialogDescription">
-    <div class="download-dialog__top"><span>AEGIS RELEASE / 6.0.3</span><button type="button" aria-label="Close download confirmation" data-download-close><svg class="icon" aria-hidden="true"><use href="#icon-x"/></svg></button></div>
-    <div class="download-dialog__body">
-      <span class="download-dialog__icon"><img src="Aegis.png" alt=""></span>
-      <p class="section-number">DOWNLOAD CONFIRMATION</p>
-      <h2 id="downloadDialogTitle">Download Aegis?</h2>
-      <p id="downloadDialogDescription">This is a manually installed browser extension, not a Chrome Web Store download. Review the package details before continuing.</p>
-      <dl class="download-dialog__facts"><div><dt>Version</dt><dd>6.0.3</dd></div><div><dt>Package</dt><dd>3.2 MB ZIP</dd></div><div><dt>Install</dt><dd>Developer mode</dd></div></dl>
-      <div class="download-dialog__notice"><strong>Before you continue</strong><ul><li>Requests storage, alarms, tabs, and multiple host permissions</li><li>Uses Roblox, Rolimons, external service, direct IP, and localhost access</li><li>Includes <code>Aegis BootStrapper.bat</code> to enable in-game sync; recommended for most users who want their preview carried into the game client</li></ul></div>
-      <label class="download-consent"><input id="downloadConsent" type="checkbox"><span>I understand this is a third-party extension and have reviewed the permissions.</span></label>
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="brand" href="#hero" aria-label="Aegis home">
+        <span class="brand__mark"><img src="Aegis.png" alt=""></span>
+        <span class="brand__name">Aegis</span>
+      </a>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#install">Install</a>
+        <a href="#download">Download</a>
+        <a href="https://discord.gg/larpblox" target="_blank" rel="noopener">Discord</a>
+      </nav>
+      <p class="footer__copy">© 2026 Aegis. All rights reserved.</p>
     </div>
-    <div class="download-dialog__actions"><button class="button button--secondary" type="button" data-download-close>Cancel</button><a class="button is-disabled" id="confirmDownload" href="https://file.garden/alJib1uIhByXg4U5/Aegis.zip" aria-disabled="true">Download ZIP <svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg></a></div>
-  </dialog>
+  </footer>
 
-  <footer class="footer"><div class="container footer__top"><div><a class="brand" href="#overview"><span class="brand__mark"><img src="Aegis.png" alt=""></span><span>Aegis</span></a><p>Local Roblox profile previews.</p></div><div class="footer__nav"><div><strong>Site</strong><a href="#features">Modules</a><a href="#workflow">Install</a><a href="#safety">Details</a></div><div><strong>Links</strong><a href="https://discord.gg/aegiss" target="_blank" rel="noopener noreferrer">Discord <svg class="icon" aria-hidden="true"><use href="#icon-external"/></svg></a><a href="#download">Download</a><a href="#faq">FAQ</a></div></div></div><div class="container footer__bottom"><span>© <span id="currentYear">2026</span> Aegis</span><span>Not affiliated with Roblox Corporation.</span><a href="#overview">Back to top <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg></a></div></footer>
 </body>
 </html>
+
