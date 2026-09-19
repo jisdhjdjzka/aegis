@@ -444,67 +444,37 @@ button { cursor: pointer; background: none; border: none; }
 }
 
 
-/* ── Discord popup ─────────────────────────────────── */
-.dc-overlay {
-  position: fixed; inset: 0; z-index: 300;
-  background: rgba(0,0,0,.55); backdrop-filter: blur(4px);
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s ease;
+/* ── Header Discord button ─────────────────────────── */
+.btn-discord {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0 14px; height: 36px;
+  background: #5865F2; color: #fff;
+  border-radius: 8px; font-size: 13px; font-weight: 700;
+  text-decoration: none;
+  transition: background .16s, transform .16s, box-shadow .16s;
+  box-shadow: 0 2px 12px rgba(88,101,242,.35);
 }
-.dc-overlay.visible { opacity: 1; pointer-events: all; }
-
-.dc-popup {
-  position: fixed; z-index: 301;
-  bottom: 28px; left: 50%; transform: translateX(-50%) translateY(40px);
-  width: min(440px, calc(100vw - 32px));
-  background: var(--panel); border: 1px solid var(--line-a);
-  border-radius: 16px; padding: 32px 28px 24px;
-  box-shadow: 0 24px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(186,255,74,.08);
-  opacity: 0; pointer-events: none;
-  transition: opacity .35s ease, transform .35s cubic-bezier(.34,1.56,.64,1);
-  text-align: center;
+.btn-discord:hover {
+  background: #4752C4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(88,101,242,.5);
 }
-.dc-popup.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: all; }
-
-.dc-popup__close {
-  position: absolute; top: 12px; right: 14px;
-  width: 28px; height: 28px; border-radius: 7px;
-  font-size: 18px; line-height: 1; color: var(--quiet);
-  transition: background .15s, color .15s;
-}
-.dc-popup__close:hover { background: var(--hover); color: var(--ink); }
-
-.dc-popup__icon {
-  width: 60px; height: 60px; margin: 0 auto 16px;
-  background: var(--surface); border: 1px solid var(--line);
-  border-radius: 14px; display: grid; place-items: center;
-}
-.dc-popup__icon img { width: 38px; height: 38px; object-fit: contain; }
-
-.dc-popup__title { font-size: 20px; font-weight: 700; letter-spacing: -.025em;
-  margin-bottom: 10px; }
-.dc-popup__body  { font-size: 13px; color: var(--muted); line-height: 1.65;
-  max-width: 320px; margin: 0 auto 22px; }
-.dc-popup__cta   { width: 100%; justify-content: center; font-size: 14px; }
-.dc-popup__skip  { margin-top: 12px; font-size: 12px; color: var(--quiet);
-  transition: color .15s; }
-.dc-popup__skip:hover { color: var(--muted); }
 
 /* ── Floating Discord FAB ───────────────────────────── */
 .dc-fab {
   position: fixed; bottom: 24px; right: 24px; z-index: 200;
-  display: flex; align-items: center; gap: 8px;
-  padding: 0 18px; height: 46px;
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 20px; height: 50px;
   background: #5865F2; color: #fff;
-  border-radius: 24px;
-  font-size: 13px; font-weight: 700;
-  box-shadow: 0 6px 24px rgba(88,101,242,.45);
+  border-radius: 25px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 6px 28px rgba(88,101,242,.55);
   transition: transform .18s, box-shadow .18s, background .18s;
   text-decoration: none;
 }
-.dc-fab svg { width: 20px; height: 20px; flex-shrink: 0; }
+.dc-fab svg { width: 20px; height: 20px; flex-shrink: 0; display: block; }
 .dc-fab:hover {
   background: #4752C4;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(88,101,242,.55);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(88,101,242,.65);
 }

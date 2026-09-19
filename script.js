@@ -212,35 +212,4 @@ function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 /* ── Download button ── */
 // Real link — no JS needed, href handles it
 
-/* ── Discord entry popup ── */
-(function () {
-  const popup   = document.getElementById('dcPopup');
-  const overlay = document.getElementById('dcOverlay');
-  const close   = document.getElementById('dcClose');
-  const skip    = document.getElementById('dcSkip');
-  if (!popup) return;
-
-  // Don't show if dismissed in this session
-  if (sessionStorage.getItem('dc-dismissed')) return;
-
-  function openPopup() {
-    popup.classList.add('visible');
-    overlay.classList.add('visible');
-    popup.focus();
-  }
-  function closePopup() {
-    popup.classList.remove('visible');
-    overlay.classList.remove('visible');
-    sessionStorage.setItem('dc-dismissed', '1');
-  }
-
-  // Show after 1.5s
-  setTimeout(openPopup, 1500);
-
-  close?.addEventListener('click', closePopup);
-  skip?.addEventListener('click', closePopup);
-  overlay?.addEventListener('click', closePopup);
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && popup.classList.contains('visible')) closePopup();
-  });
-})();
+/* ── Discord FAB — no JS needed, pure CSS ── */

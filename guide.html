@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0c09">
+  <meta name="description" content="Aegis — Setup guide, usage tutorial, and support.">
+  <title>Aegis — Guide & Support</title>
+  <link rel="icon" href="Aegis.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Guide-page extras ── */
+    .guide-hero { padding: 120px 0 60px; border-bottom: 1px solid var(--line); }
+    .guide-hero h1 { font-size: clamp(40px,5.5vw,72px); font-weight:700;
+      letter-spacing:-.058em; line-height:.94; margin-bottom:16px; }
+    .guide-hero p { color:var(--muted); font-size:15px; max-width:520px; }
+
+    .guide-layout { display:grid; grid-template-columns:220px 1fr; gap:60px;
+      padding:64px 0 100px; align-items:start; }
+
+    /* Sticky sidebar nav */
+    .guide-nav { position:sticky; top:calc(var(--hdr) + 20px); }
+    .guide-nav__label { font:700 9px/1 var(--mono); letter-spacing:.12em;
+      color:var(--quiet); text-transform:uppercase; margin-bottom:14px; }
+    .guide-nav a { display:flex; align-items:center; gap:8px; padding:8px 10px;
+      border-radius:7px; font-size:13px; font-weight:500; color:var(--quiet);
+      text-decoration:none; transition:background .14s, color .14s; }
+    .guide-nav a:hover { background:var(--hover); color:var(--muted); }
+    .guide-nav a.active { background:var(--acid-dim); color:var(--acid); }
+    .guide-nav__dot { width:5px; height:5px; border-radius:50%;
+      background:currentColor; flex-shrink:0; }
+
+    /* Content */
+    .guide-content { min-width:0; }
+    .guide-section { padding-bottom:64px; border-bottom:1px solid var(--line);
+      margin-bottom:64px; scroll-margin-top:calc(var(--hdr) + 28px); }
+    .guide-section:last-child { border-bottom:none; margin-bottom:0; }
+
+    .guide-section h2 { font-size:clamp(26px,3.5vw,38px); font-weight:700;
+      letter-spacing:-.04em; margin-bottom:6px; }
+    .guide-section .sub { color:var(--muted); font-size:14px; margin-bottom:32px; }
+
+    /* Step cards */
+    .steps-list { display:grid; gap:16px; }
+    .step-card { background:var(--panel); border:1px solid var(--line);
+      border-radius:12px; padding:22px 24px; display:grid;
+      grid-template-columns:40px 1fr; gap:0 18px; }
+    .step-card__num { width:40px; height:40px; border-radius:10px;
+      background:var(--acid-dim); border:1px solid var(--line-a);
+      display:grid; place-items:center; font:700 14px/1 var(--mono);
+      color:var(--acid); margin-top:2px; }
+    .step-card h3 { font-size:15px; font-weight:600; margin-bottom:6px; }
+    .step-card p  { font-size:13px; color:var(--muted); line-height:1.65; margin:0; }
+    .step-card code { font-family:var(--mono); font-size:12px;
+      background:#0b0e0b; border:1px solid var(--line);
+      padding:1px 6px; border-radius:4px; color:var(--muted); }
+    .step-card .note { margin-top:10px; padding:10px 12px;
+      background:#0f1a08; border:1px solid var(--line-a);
+      border-radius:7px; font-size:12px; color:var(--acid); }
+
+    /* Warning / tip boxes */
+    .callout { display:flex; gap:14px; padding:16px 18px;
+      border-radius:10px; margin:20px 0; font-size:13px; line-height:1.65; }
+    .callout--tip  { background:rgba(186,255,74,.06); border:1px solid rgba(186,255,74,.2); color:var(--muted); }
+    .callout--warn { background:rgba(255,201,107,.05); border:1px solid rgba(255,201,107,.2); color:var(--muted); }
+    .callout__icon { font-size:18px; flex-shrink:0; line-height:1.4; }
+
+    /* Feature table */
+    .feat-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .feat-table th { text-align:left; padding:10px 14px; font:700 10px/1 var(--mono);
+      letter-spacing:.1em; text-transform:uppercase; color:var(--quiet);
+      border-bottom:1px solid var(--line); }
+    .feat-table td { padding:12px 14px; border-bottom:1px solid var(--line);
+      color:var(--muted); vertical-align:top; }
+    .feat-table tr:last-child td { border-bottom:none; }
+    .feat-table td:first-child { font-family:var(--mono); font-size:12px;
+      color:var(--acid); white-space:nowrap; }
+
+    /* Discord CTA block */
+    .dc-cta-block { background:linear-gradient(135deg,#1e2a5e 0%,#111611 60%);
+      border:1px solid #3d4fc4; border-radius:14px; padding:36px 32px;
+      display:flex; align-items:center; gap:28px; }
+    .dc-cta-block__icon { width:64px; height:64px; background:#5865F2;
+      border-radius:16px; display:grid; place-items:center; flex-shrink:0; }
+    .dc-cta-block__icon svg { width:36px; height:36px; }
+    .dc-cta-block h3 { font-size:22px; font-weight:700; margin-bottom:6px; }
+    .dc-cta-block p  { color:var(--muted); font-size:14px; margin-bottom:18px; }
+    .dc-cta-block .btn-discord { font-size:14px; height:46px; padding:0 22px; }
+
+    @media (max-width:780px) {
+      .guide-layout { grid-template-columns:1fr; }
+      .guide-nav { position:static; }
+      .dc-cta-block { flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+  <svg aria-hidden="true" style="display:none">
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+    <symbol id="i-x"    viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ── Floating Discord FAB ── -->
+  <a class="dc-fab" href="https://discord.gg/larpblox" target="_blank" rel="noopener" aria-label="Join Discord">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+      <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+    </svg>
+    <span>Join Discord</span>
+  </a>
+
+  <!-- ── Header ── -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header__inner">
+      <a class="brand" href="index.html" aria-label="Aegis home">
+        <span class="brand__mark"><img src="Aegis.png" alt=""></span>
+        <span class="brand__name">Aegis</span>
+        <span class="brand__ver">v1.0</span>
+      </a>
+      <nav class="desk-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="guide.html" aria-current="page">Guide</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#download">Download</a>
+      </nav>
+      <div class="header__actions">
+        <a class="btn-discord" href="https://discord.gg/larpblox" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15" aria-hidden="true">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+          </svg>
+          Discord
+        </a>
+        <a class="btn btn--sm" href="index.html#download">Download</a>
+      </div>
+      <button class="ham" id="hamBtn" type="button" aria-label="Open menu" aria-expanded="false">
+        <svg class="ham__open" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="ham__close" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero -->
+    <div class="guide-hero">
+      <div class="container">
+        <p class="eyebrow">GUIDE & SUPPORT</p>
+        <h1>Everything you need<br>to get running.</h1>
+        <p>Step-by-step setup, a full usage walkthrough, keyboard shortcuts, troubleshooting, and direct access to support — all in one place.</p>
+      </div>
+    </div>
+
+    <div class="container guide-layout">
+
+      <!-- Sticky sidebar -->
+      <nav class="guide-nav" aria-label="Guide sections">
+        <div class="guide-nav__label">On this page</div>
+        <a href="#setup" class="active"><span class="guide-nav__dot"></span> Setup</a>
+        <a href="#usage"><span class="guide-nav__dot"></span> Using Aegis</a>
+        <a href="#editor"><span class="guide-nav__dot"></span> The Editor</a>
+        <a href="#console"><span class="guide-nav__dot"></span> Console</a>
+        <a href="#scripts"><span class="guide-nav__dot"></span> Managing Scripts</a>
+        <a href="#shortcuts"><span class="guide-nav__dot"></span> Shortcuts</a>
+        <a href="#troubleshoot"><span class="guide-nav__dot"></span> Troubleshooting</a>
+        <a href="#support"><span class="guide-nav__dot"></span> Support</a>
+      </nav>
+
+      <!-- Main content -->
+      <div class="guide-content">
+
+        <!-- ══ SETUP ══ -->
+        <section class="guide-section" id="setup">
+          <h2>Setup</h2>
+          <p class="sub">Get Aegis installed and ready on a fresh machine in under two minutes.</p>
+
+          <div class="steps-list">
+            <div class="step-card">
+              <div class="step-card__num">01</div>
+              <div>
+                <h3>Download the zip</h3>
+                <p>Grab <strong>Aegis.zip</strong> from the <a href="index.html#download" style="color:var(--acid)">Download page</a>. Save it anywhere — your Desktop, Downloads folder, wherever is convenient.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">02</div>
+              <div>
+                <h3>Extract the zip</h3>
+                <p>Right-click <code>Aegis.zip</code> → <strong>Extract All</strong>. Choose a permanent folder — do <em>not</em> run Aegis directly from inside the zip. A folder like <code>C:\Aegis\</code> works well.</p>
+                <div class="note">⚡ Keep all files together. <code>Aegis.exe</code>, <code>Aegis.png</code>, and <code>aegis_bootstrapper.bat</code> must be in the same folder.</div>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">03</div>
+              <div>
+                <h3>Place the bootstrapper</h3>
+                <p>Drop <code>aegis_bootstrapper.bat</code> into the same folder as <code>Aegis.exe</code>. This file runs silently when Aegis starts and sets up what it needs. If it's missing, Aegis will show you exactly where to put it.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">04</div>
+              <div>
+                <h3>Add an antivirus exclusion (if needed)</h3>
+                <p>Self-contained executables sometimes trigger heuristic AV flags. If Windows Defender quarantines <code>Aegis.exe</code>, add the Aegis folder to your exclusions: <strong>Windows Security → Virus & threat protection → Manage settings → Exclusions → Add a folder</strong>.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">05</div>
+              <div>
+                <h3>Launch Aegis.exe</h3>
+                <p>Double-click <code>Aegis.exe</code>. You'll see a short boot splash (Bootstrapping → Verifying → Loading → Ready), then the main window opens. No install wizard, no .NET install required.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ USING AEGIS ══ -->
+        <section class="guide-section" id="usage">
+          <h2>Using Aegis</h2>
+          <p class="sub">The main workflow from launch to execution.</p>
+
+          <div class="steps-list">
+            <div class="step-card">
+              <div class="step-card__num">1</div>
+              <div>
+                <h3>Open or create a script</h3>
+                <p>From the <strong>Start page</strong>, click <strong>+ New script</strong> to open a blank editor tab. Or click any script in the <strong>Explorer sidebar</strong> on the left to open an existing one.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">2</div>
+              <div>
+                <h3>Write or paste your script</h3>
+                <p>Type or paste Luau code into the editor. The editor shows line numbers, has an acid-green caret, and supports standard text editing shortcuts. Tabs are preserved.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">3</div>
+              <div>
+                <h3>Launch your game</h3>
+                <p>Open Roblox and get into a game. Aegis needs a running game client before it can inject.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">4</div>
+              <div>
+                <h3>Click Attach</h3>
+                <p>Press the <strong>↪ Attach</strong> button in the top-right of Aegis. The status bar at the bottom will update from <em>No client</em> to show a connected state once hooking succeeds.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">5</div>
+              <div>
+                <h3>Click Run ▶</h3>
+                <p>Once attached, hit the acid-green <strong>▶ Run</strong> button. Your script executes in the game. Watch the <strong>Console</strong> panel at the bottom for output and errors.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout--tip" style="margin-top:24px">
+            <span class="callout__icon">💡</span>
+            <span>You can run scripts again without re-attaching. Attach once per game session — it stays hooked until the game closes or you restart Aegis.</span>
+          </div>
+        </section>
+
+        <!-- ══ EDITOR ══ -->
+        <section class="guide-section" id="editor">
+          <h2>The Editor</h2>
+          <p class="sub">Everything you need to know about writing and managing code.</p>
+
+          <table class="feat-table">
+            <thead>
+              <tr><th>Feature</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Line numbers</td><td>Displayed in the left gutter. Stays in sync with your scroll position.</td></tr>
+              <tr><td>Multi-tab</td><td>Open multiple scripts at once using the <strong>+</strong> button in the tab bar. Each tab holds its own code independently.</td></tr>
+              <tr><td>Tab rename</td><td>Right-click the script in the sidebar → <strong>Rename</strong>. The tab label updates automatically.</td></tr>
+              <tr><td>Acid caret</td><td>The text cursor is styled in Aegis green. Selections highlight with a soft green tint.</td></tr>
+              <tr><td>Monospace font</td><td>Consolas is used throughout the editor for clear, readable code.</td></tr>
+              <tr><td>Left-edge pulse</td><td>A subtle acid-green flash on the editor's left border fires on every keystroke — visual feedback that input is registered.</td></tr>
+              <tr><td>Auto-save to tab</td><td>Code is saved to the tab in memory as you type. Switching tabs and returning preserves your code for the session.</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout callout--warn" style="margin-top:24px">
+            <span class="callout__icon">⚠️</span>
+            <span>Script tabs are held in memory only. If you close Aegis, unsaved scripts are lost. Copy important scripts to a <code>.luau</code> file externally if you want to keep them long-term.</span>
+          </div>
+        </section>
+
+        <!-- ══ CONSOLE ══ -->
+        <section class="guide-section" id="console">
+          <h2>Console</h2>
+          <p class="sub">The console panel shows real-time output from script execution.</p>
+
+          <div class="steps-list">
+            <div class="step-card">
+              <div class="step-card__num">⊘</div>
+              <div>
+                <h3>Clear button</h3>
+                <p>Wipes all console output. The panel fades out and back in smoothly.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">▼</div>
+              <div>
+                <h3>Collapse / expand</h3>
+                <p>Collapses the console to just its toolbar bar. Click again to restore. Useful when you need more editor space.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">×</div>
+              <div>
+                <h3>Close</h3>
+                <p>Hides the console entirely. It reopens the next time you switch to a script tab.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">···</div>
+              <div>
+                <h3>Typing indicator</h3>
+                <p>Three pulsing dots appear in the console while Aegis is processing or while you're actively typing code. They disappear automatically when idle.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ SCRIPTS ══ -->
+        <section class="guide-section" id="scripts">
+          <h2>Managing Scripts</h2>
+          <p class="sub">The Explorer sidebar gives you full control over your script library.</p>
+
+          <table class="feat-table">
+            <thead>
+              <tr><th>Action</th><th>How to do it</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>New script</td><td>Click <strong>+</strong> in the tab bar, or <strong>+ New script</strong> on the Start page.</td></tr>
+              <tr><td>Open script</td><td>Click any script in the Explorer sidebar, or on the Start page under Recent Scripts.</td></tr>
+              <tr><td>Rename</td><td>Right-click the script in the sidebar → <strong>✏ Rename</strong>. Type the new name and press Enter.</td></tr>
+              <tr><td>Duplicate</td><td>Right-click → <strong>📋 Duplicate</strong>. Creates a copy with "(copy)" appended to the name.</td></tr>
+              <tr><td>Execute directly</td><td>Right-click → <strong>▶ Execute</strong>. Opens the script and runs it immediately.</td></tr>
+              <tr><td>Delete</td><td>Right-click → <strong>🗑 Delete</strong>. A confirmation dialog appears before deletion.</td></tr>
+              <tr><td>Filter scripts</td><td>Type in the <strong>Filter scripts</strong> box at the top of the sidebar. The list narrows in real time.</td></tr>
+              <tr><td>Collapse sidebar</td><td>Click the <strong>‹</strong> arrow at the top of the Explorer. Click <strong>›</strong> to restore it.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ══ SHORTCUTS ══ -->
+        <section class="guide-section" id="shortcuts">
+          <h2>Keyboard Shortcuts</h2>
+          <p class="sub">Standard text-editing shortcuts work in the code editor.</p>
+
+          <table class="feat-table">
+            <thead>
+              <tr><th>Shortcut</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Ctrl + A</td><td>Select all code in the editor</td></tr>
+              <tr><td>Ctrl + C</td><td>Copy selected text</td></tr>
+              <tr><td>Ctrl + V</td><td>Paste</td></tr>
+              <tr><td>Ctrl + Z</td><td>Undo</td></tr>
+              <tr><td>Ctrl + Y</td><td>Redo</td></tr>
+              <tr><td>Tab</td><td>Insert a tab character (4 spaces)</td></tr>
+              <tr><td>Enter</td><td>New line (preserved indentation)</td></tr>
+              <tr><td>Home / End</td><td>Jump to start / end of line</td></tr>
+              <tr><td>Ctrl + Home</td><td>Jump to top of file</td></tr>
+              <tr><td>Ctrl + End</td><td>Jump to bottom of file</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ══ TROUBLESHOOTING ══ -->
+        <section class="guide-section" id="troubleshoot">
+          <h2>Troubleshooting</h2>
+          <p class="sub">Common issues and how to fix them.</p>
+
+          <div class="steps-list">
+            <div class="step-card">
+              <div class="step-card__num">!</div>
+              <div>
+                <h3>"aegis_bootstrapper.bat was not detected"</h3>
+                <p>The popup shows you the exact path where the bootstrapper needs to be. Place <code>aegis_bootstrapper.bat</code> in that folder, then relaunch <code>Aegis.exe</code>.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">!</div>
+              <div>
+                <h3>Windows Defender quarantined Aegis.exe</h3>
+                <p>Self-contained .NET executables frequently trigger heuristic AV. Go to <strong>Windows Security → Virus & threat protection → Protection history</strong>, find the quarantined file, and click <strong>Restore</strong>. Then add the Aegis folder to exclusions so it isn't flagged again.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">!</div>
+              <div>
+                <h3>Attach doesn't work / status stays "No client"</h3>
+                <p>Make sure Roblox is fully loaded into a game (not just the launcher or home screen). Try attaching again after you're inside a game world. If it still fails, rejoin the game and try again.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">!</div>
+              <div>
+                <h3>Script ran but nothing happened in-game</h3>
+                <p>Check the console for error output. Common causes: the script references a service that isn't loaded yet, or the game has anti-cheat that blocked execution. Try a simple <code>print("test")</code> first to confirm the hook is working.</p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-card__num">!</div>
+              <div>
+                <h3>Aegis crashed or won't open</h3>
+                <p>Make sure you extracted the zip fully — running from inside the zip itself causes crashes. Also verify <code>Aegis.png</code> is in the same folder as <code>Aegis.exe</code>. If the issue persists, ask in Discord with a screenshot.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ SUPPORT ══ -->
+        <section class="guide-section" id="support">
+          <h2>Support</h2>
+          <p class="sub">If you're stuck, the Discord is the fastest way to get help.</p>
+
+          <div class="dc-cta-block">
+            <div class="dc-cta-block__icon">
+              <svg viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Join the Aegis Discord</h3>
+              <p>Get real-time help from the community and the team. Post your issue with a screenshot and someone will help you out. Also the place for script sharing, announcements, and early access to updates.</p>
+              <a class="btn-discord" href="https://discord.gg/larpblox" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                discord.gg/larpblox
+              </a>
+            </div>
+          </div>
+
+          <div class="callout callout--tip" style="margin-top:28px">
+            <span class="callout__icon">💡</span>
+            <span>When asking for help, always include: your Windows version, a screenshot of the issue, and what you were doing when it happened. This gets you a faster, more accurate answer.</span>
+          </div>
+        </section>
+
+      </div><!-- /guide-content -->
+    </div><!-- /guide-layout -->
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark"><img src="Aegis.png" alt="Aegis"></span>
+        <span class="brand__name">Aegis</span>
+      </a>
+      <nav class="footer__nav">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="index.html#download">Download</a>
+        <a href="https://discord.gg/larpblox" target="_blank" rel="noopener">Discord</a>
+      </nav>
+      <p class="footer__copy">© 2026 Aegis. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll progress
+    const hdr = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      hdr?.style.setProperty('--scroll-p', max > 0 ? Math.min(1, scrollY/max) : 0);
+    }, { passive:true });
+
+    // Mobile nav
+    const ham = document.getElementById('hamBtn');
+    document.querySelector('.mob-nav') && ham?.addEventListener('click', () => {
+      const open = ham.getAttribute('aria-expanded') !== 'true';
+      ham.setAttribute('aria-expanded', open);
+      document.querySelector('.mob-nav').hidden = !open;
+    });
+
+    // Active sidebar link on scroll
+    const sections = document.querySelectorAll('.guide-section');
+    const navLinks = document.querySelectorAll('.guide-nav a');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const link = document.querySelector(`.guide-nav a[href="#${en.target.id}"]`);
+          link?.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => io.observe(s));
+  </script>
+</body>
+</html>
