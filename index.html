@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0c09">
+  <meta name="description" content="Aegis — a fast, clean script executor with smooth animations and a modern UI.">
+  <meta property="og:title" content="Aegis — Script Executor">
+  <meta property="og:description" content="Fast. Clean. Smooth. The executor built different.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="Aegis.png">
+  <title>Aegis — Script Executor</title>
+  <link rel="icon" href="Aegis.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ── SVG sprite ── -->
+  <svg aria-hidden="true" style="display:none">
+    <symbol id="i-dl"     viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-menu"   viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+    <symbol id="i-x"      viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-play"   viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-zap"    viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="i-code"   viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12-8.58 3.91a2 2 0 0 1-1.66 0L3 12"/><path d="m22 17-8.58 3.91a2 2 0 0 1-1.66 0L3 17"/></symbol>
+    <symbol id="i-ext"    viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-check"  viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
+    <symbol id="i-chev"   viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ── Header ── -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header__inner">
+      <a class="brand" href="#hero" aria-label="Aegis home">
+        <span class="brand__mark"><img src="Aegis.png" alt=""></span>
+        <span class="brand__name">Aegis</span>
+        <span class="brand__ver">v1.0</span>
+      </a>
+      <nav class="desk-nav" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header__actions">
+        <a class="txt-link" href="https://discord.gg/larpblox" target="_blank" rel="noopener">Discord</a>
+        <a class="btn btn--sm" href="#download">Download</a>
+      </div>
+      <button class="ham" id="hamBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg class="ham__open"  aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="ham__close" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <nav class="mob-nav" id="mobileNav" hidden aria-label="Mobile">
+      <a href="#features">Features</a>
+      <a href="#demo">Demo</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+      <div class="mob-nav__ctas">
+        <a href="https://discord.gg/larpblox" target="_blank" rel="noopener">Discord</a>
+        <a class="btn" href="#download">Download</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <div class="container hero__grid">
+
+        <!-- Copy -->
+        <div class="hero__copy" data-reveal>
+          <p class="eyebrow">AEGIS / SCRIPT EXECUTOR</p>
+          <h1>Execute<br><span class="acid">without</span><br>compromise.</h1>
+          <p class="hero__lead">A clean, fast executor wrapped in a UI that doesn't look like it was built in 2014. Smooth animations, instant attach, and a built-in console — all in one lightweight package.</p>
+          <div class="hero__ctas">
+            <a class="btn btn--lg" href="#download">
+              Download Aegis
+              <svg aria-hidden="true"><use href="#i-dl"/></svg>
+            </a>
+            <a class="btn btn--lg btn--ghost" href="#demo">See it live</a>
+          </div>
+          <dl class="hero__pills">
+            <div><dt>Version</dt><dd>1.0.0</dd></div>
+            <div><dt>Size</dt><dd>~69 MB</dd></div>
+            <div><dt>Platform</dt><dd>Windows</dd></div>
+            <div><dt>Price</dt><dd>Free</dd></div>
+          </dl>
+        </div>
+
+        <!-- Live UI demo shell -->
+        <div class="ui-shell" data-reveal aria-label="Interactive Aegis UI preview">
+          <div class="ui-shell__bar">
+            <span class="ui-shell__dot ui-shell__dot--red"></span>
+            <span class="ui-shell__dot"></span>
+            <span class="ui-shell__dot"></span>
+            <span class="ui-shell__title">Aegis</span>
+            <span class="ui-shell__addr">aegis-executor</span>
+          </div>
+
+          <!-- Tabs -->
+          <div class="ui-tabs">
+            <button class="ui-tab ui-tab--active" data-tab="start">⭐ Start</button>
+            <button class="ui-tab"                data-tab="editor">📄 Untitled 1 <span class="ui-tab__x">×</span></button>
+            <span class="ui-tab ui-tab--plus">+</span>
+            <div class="ui-tabs__right">
+              <button class="ui-btn-attach">↪ Attach</button>
+            </div>
+          </div>
+
+          <!-- Panels -->
+          <div class="ui-body">
+            <!-- Sidebar -->
+            <aside class="ui-sidebar">
+              <div class="ui-sidebar__head">
+                <span>Explorer</span>
+                <button class="ui-icon-btn">‹</button>
+              </div>
+              <div class="ui-filter">
+                <span class="ui-filter__icon">🔍</span>
+                <span class="ui-filter__placeholder">Filter scripts</span>
+              </div>
+              <div class="ui-tree">
+                <div class="ui-tree__section">› SCRIPTS</div>
+                <div class="ui-tree__item ui-tree__item--active" data-script="hello">📄 Untitled_1.luau</div>
+                <div class="ui-tree__item" data-script="esp">📄 esp.luau</div>
+                <div class="ui-tree__item" data-script="inf">📄 inf_jump.luau</div>
+                <div class="ui-tree__section" style="margin-top:10px">› AUTO EXECUTE</div>
+                <div class="ui-tree__empty">Nothing runs on attach.</div>
+              </div>
+            </aside>
+
+            <!-- Start page -->
+            <div class="ui-page" id="page-start">
+              <div class="ui-start__content">
+                <h2 class="ui-start__title">Aegis</h2>
+                <p class="ui-start__sub">No client attached.</p>
+                <div class="ui-start__section-label">START</div>
+                <button class="ui-start__action" id="demoNewScript">
+                  <span class="ui-start__action-icon acid">+</span> New script
+                </button>
+                <div class="ui-start__section-label" style="margin-top:20px">RECENT SCRIPTS</div>
+                <button class="ui-start__action" data-open-script="hello">📄 Untitled_1.luau</button>
+                <button class="ui-start__action" data-open-script="esp">📄 esp.luau</button>
+              </div>
+              <div class="ui-tip">
+                <div class="ui-tip__label">TIP OF THE DAY</div>
+                <p><code>saveinstance</code> serializes an instance into a Roblox Studio format.</p>
+              </div>
+            </div>
+
+            <!-- Editor page -->
+            <div class="ui-page ui-page--hidden" id="page-editor">
+              <div class="ui-editor">
+                <div class="ui-editor__crumb">📄 <span id="editorFilename">Untitled 1</span></div>
+                <div class="ui-editor__area">
+                  <div class="ui-editor__gutter" id="editorGutter">1</div>
+                  <textarea class="ui-editor__code" id="editorCode" spellcheck="false">print("Hello, world!");</textarea>
+                </div>
+                <div class="ui-console">
+                  <div class="ui-console__bar">
+                    <span>› CONSOLE</span>
+                    <div class="ui-console__controls">
+                      <button class="ui-icon-btn" id="consoleClear" title="Clear">⊘</button>
+                      <button class="ui-icon-btn" title="Close">×</button>
+                    </div>
+                  </div>
+                  <div class="ui-console__output" id="consoleOutput">
+                    <div class="ui-console__line">Aegis ready, waiting for a client.</div>
+                  </div>
+                  <div class="ui-console__typing" id="typingDots" hidden>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status bar -->
+          <div class="ui-statusbar">
+            <span>› <span id="statusText">Start</span></span>
+            <span class="ui-statusbar__right">
+              <span class="ui-statusbar__client">
+                <span class="ui-statusbar__dot"></span> No client
+              </span>
+            </span>
+          </div>
+        </div><!-- /ui-shell -->
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         FEATURES
+    ═══════════════════════════════════════ -->
+    <section class="section section--border" id="features">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">01 / MODULES</p>
+          <h2>Built for the<br>people who notice.</h2>
+          <p>Every detail was considered. Every edge was smoothed.</p>
+        </div>
+
+        <ul class="feat-grid">
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-zap"/></svg>
+            </div>
+            <h3>Instant Attach</h3>
+            <p>One click to hook. No waiting, no guessing. The Attach button is always in reach.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-code"/></svg>
+            </div>
+            <h3>Clean Editor</h3>
+            <p>Consolas-rendered code editor with line numbers, acid caret, and smooth scroll sync.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-layers"/></svg>
+            </div>
+            <h3>Multi-Tab Scripts</h3>
+            <p>Open multiple scripts at once. Each tab remembers its own code. Right-click to rename, duplicate, or delete.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-shield"/></svg>
+            </div>
+            <h3>Bootstrap Loader</h3>
+            <p>Ships alongside a configurable bootstrapper for seamless setup on fresh machines.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-play"/></svg>
+            </div>
+            <h3>Live Console</h3>
+            <p>Per-line animated console output with a wave typing indicator. See exactly what's running.</p>
+          </li>
+          <li data-reveal>
+            <div class="feat-icon">
+              <svg aria-hidden="true"><use href="#i-ext"/></svg>
+            </div>
+            <h3>Self-Contained</h3>
+            <p>No .NET install required. Single exe, ships with everything bundled. Extract and run.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         DEMO SECTION (full-width interactive)
+    ═══════════════════════════════════════ -->
+    <section class="section" id="demo">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">02 / DEMO</p>
+          <h2>Try it right here.</h2>
+          <p>Click the scripts, type in the editor, hit Run. It's the real UI, live in the browser.</p>
+        </div>
+
+        <div class="demo-shell" data-reveal>
+          <div class="demo-shell__tabs">
+            <button class="demo-tab demo-tab--active" data-demo="start">Start page</button>
+            <button class="demo-tab" data-demo="editor">Editor + Console</button>
+            <button class="demo-tab" data-demo="context">Right-click menu</button>
+          </div>
+
+          <div class="demo-panel" id="demo-start">
+            <div class="demo-mockup demo-mockup--start">
+              <div class="dm-title">Aegis</div>
+              <div class="dm-sub">No client attached.</div>
+              <div class="dm-label">START</div>
+              <div class="dm-action dm-action--highlight">+ New script</div>
+              <div class="dm-label" style="margin-top:16px">RECENT SCRIPTS</div>
+              <div class="dm-action">📄 Untitled_1.luau</div>
+              <div class="dm-action">📄 esp.luau</div>
+            </div>
+            <div class="demo-tip">
+              <div class="demo-tip__card">
+                <div class="demo-tip__label">TIP OF THE DAY</div>
+                <p><code>getgenv()</code> stores values that persist across script executions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-panel demo-panel--hidden" id="demo-editor">
+            <div class="demo-editor-wrap">
+              <div class="demo-editor-crumb">📄 Untitled 1</div>
+              <div class="demo-editor-body">
+                <div class="demo-gutter" id="demoGutter">1<br>2<br>3<br>4<br>5</div>
+                <textarea class="demo-code" id="demoCode" spellcheck="false">local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+local char = lp.Character
+
+print("Aegis ready")
+</textarea>
+              </div>
+              <div class="demo-console">
+                <div class="demo-console-bar">
+                  <span>› CONSOLE</span>
+                  <button class="demo-run-btn" id="demoRunBtn">▶ Run</button>
+                </div>
+                <div class="demo-console-out" id="demoConsoleOut">
+                  <span class="demo-console-line">Aegis ready, waiting for a client.</span>
+                </div>
+                <div class="demo-typing" id="demoTyping" hidden>
+                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-panel demo-panel--hidden" id="demo-context">
+            <div class="demo-ctx-wrap">
+              <div class="demo-ctx-sidebar">
+                <div class="demo-ctx-section">› SCRIPTS</div>
+                <div class="demo-ctx-item demo-ctx-item--selected">📄 Untitled_1.luau</div>
+                <div class="demo-ctx-item">📄 esp.luau</div>
+                <div class="demo-ctx-item">📄 inf_jump.luau</div>
+              </div>
+              <div class="demo-ctx-menu" id="demoCtxMenu">
+                <button class="demo-ctx-btn">📂  Open</button>
+                <button class="demo-ctx-btn">▶  Execute</button>
+                <hr class="demo-ctx-sep">
+                <button class="demo-ctx-btn">📋  Duplicate</button>
+                <button class="demo-ctx-btn">✏  Rename</button>
+                <button class="demo-ctx-btn">📁  Show in Explorer</button>
+                <hr class="demo-ctx-sep">
+                <button class="demo-ctx-btn demo-ctx-btn--danger">🗑  Delete</button>
+              </div>
+              <p class="demo-ctx-hint">Right-click any script in the sidebar to get this menu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         INSTALL
+    ═══════════════════════════════════════ -->
+    <section class="section section--border" id="install">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">03 / INSTALL</p>
+          <h2>Up in three steps.</h2>
+        </div>
+
+        <ol class="steps" data-reveal>
+          <li>
+            <span class="step-num">01</span>
+            <div class="step-icon">
+              <svg aria-hidden="true"><use href="#i-dl"/></svg>
+            </div>
+            <h3>Download</h3>
+            <p>Grab the zip from the Download section. Extract it anywhere — desktop, a folder, wherever.</p>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <div class="step-icon">
+              <svg aria-hidden="true"><use href="#i-layers"/></svg>
+            </div>
+            <h3>Place bootstrapper</h3>
+            <p>Drop <code>aegis_bootstrapper.bat</code> into the same folder as <code>Aegis.exe</code>. The app looks for it on launch.</p>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <div class="step-icon">
+              <svg aria-hidden="true"><use href="#i-play"/></svg>
+            </div>
+            <h3>Run & attach</h3>
+            <p>Open <code>Aegis.exe</code>. Hit <strong>Attach</strong> once your game is loaded. Done.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         DOWNLOAD
+    ═══════════════════════════════════════ -->
+    <section class="section" id="download">
+      <div class="container dl-grid" data-reveal>
+        <div class="dl-copy">
+          <p class="eyebrow">04 / DOWNLOAD</p>
+          <h2>Get Aegis.</h2>
+          <p>Self-contained. No runtime needed. No install wizard. Just unzip and go.</p>
+          <ul class="dl-list">
+            <li>Windows 10 / 11 (x64)</li>
+            <li>No .NET install required</li>
+            <li>~69 MB, single exe</li>
+            <li>Free forever</li>
+          </ul>
+        </div>
+
+        <div class="dl-card">
+          <div class="dl-card__top">
+            <div class="dl-logo"><img src="Aegis.png" alt="Aegis"></div>
+            <div class="dl-status"><span class="dl-status__dot"></span> Latest release</div>
+          </div>
+          <div class="dl-card__label">AEGIS EXECUTOR</div>
+          <h3 class="dl-card__ver">v1.0.0</h3>
+          <p class="dl-card__desc">Windows x64 · self-contained · free</p>
+          <a class="btn btn--lg" href="https://file.garden/aq7pGjhhHV7kFaey/Aegis.zip" id="dlBtn" download>
+            Download Aegis
+            <svg aria-hidden="true"><use href="#i-dl"/></svg>
+          </a>
+          <div class="dl-hash">
+            <span class="dl-hash__label">SHA-256</span>
+            <code class="dl-hash__val">Aegis.zip</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         FAQ
+    ═══════════════════════════════════════ -->
+    <section class="section section--border" id="faq">
+      <div class="container faq-grid" data-reveal>
+        <div class="faq-intro">
+          <p class="eyebrow">05 / FAQ</p>
+          <h2>Common questions.</h2>
+          <a class="plain-link" href="https://discord.gg/larpblox" target="_blank" rel="noopener">Ask on Discord ↗</a>
+        </div>
+        <div class="faq">
+          <details open>
+            <summary>Do I need to install anything?<span aria-hidden="true"></span></summary>
+            <p>No. Aegis is fully self-contained. The exe bundles the entire .NET 8 runtime. Just extract the zip and run.</p>
+          </details>
+          <details>
+            <summary>What is aegis_bootstrapper.bat?<span aria-hidden="true"></span></summary>
+            <p>It's a setup script that runs silently when you launch Aegis. Place it next to <code>Aegis.exe</code>. If it's missing, Aegis will tell you where to put it.</p>
+          </details>
+          <details>
+            <summary>Why does my antivirus flag it?<span aria-hidden="true"></span></summary>
+            <p>Self-contained .NET executables commonly trigger heuristic detections. Add the folder to your AV exclusions. Aegis does not contain malicious code.</p>
+          </details>
+          <details>
+            <summary>Can I run multiple scripts?<span aria-hidden="true"></span></summary>
+            <p>Yes. Open as many tabs as you want. Each one holds its own code independently. Use the + button in the tab bar or right-click a script in the sidebar.</p>
+          </details>
+          <details>
+            <summary>Is there a mobile version?<span aria-hidden="true"></span></summary>
+            <p>Not currently. Aegis is a Windows desktop application. A web or mobile companion is not planned for v1.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="brand" href="#hero" aria-label="Aegis home">
+        <span class="brand__mark"><img src="Aegis.png" alt=""></span>
+        <span class="brand__name">Aegis</span>
+      </a>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#install">Install</a>
+        <a href="#download">Download</a>
+        <a href="https://discord.gg/larpblox" target="_blank" rel="noopener">Discord</a>
+      </nav>
+      <p class="footer__copy">© 2026 Aegis. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
